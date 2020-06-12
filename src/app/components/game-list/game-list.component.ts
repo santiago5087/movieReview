@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 
 import { GamesService } from '../../services/games.service';
 
@@ -9,11 +9,15 @@ import { GamesService } from '../../services/games.service';
 })
 export class GameListComponent implements OnInit {
 
+  @HostBinding('class') classes = 'row';
+
+  games: any = [];
+
   constructor(private gamesService: GamesService) { }
 
   ngOnInit(): void {
     this.gamesService.getGames()
-      .subscribe(res => console.log(res),
+      .subscribe(games => this.games = games,
       err => console.error(err));
   }
 
