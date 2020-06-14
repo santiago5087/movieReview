@@ -14,7 +14,7 @@
           <input type="url" name="image" [(ngModel)]="game.image" placeholder="Image URL" 
           class="form-control">
         </div>
-        <button class="btn btn-success btn-block" (click)="saveNewGame()">Save</button>
+        <button class="btn btn-success btn-block" (click)="edit ? updateGame() : saveNewGame()">Save</button>
       </form>
     </div>
   </div>
@@ -22,9 +22,9 @@
 
 <div class="col-md-4">
   <div class="card card-body text-center">
-    <img [src]="game.image" class="card-img-top">
-    <h3>{{ game.id }}. {{ game.title }}</h3>
-    <p>{{ game.description }}</p>
+    <img [src]="game.image == '' ? '/assets/no-image.png' : game.image" class="card-img-top">
+    <h3>{{ game.id }}. {{ game.title == '' ? 'Game Title' : game.title }}</h3>
+    <p>{{ game.description == '' ? 'Write Your Description' : game.description }}</p>
     <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
   </div>
 </div>

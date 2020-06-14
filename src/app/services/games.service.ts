@@ -17,8 +17,8 @@ export class GamesService {
     return this.http.get(`${this.API_URI}/games`);
   }
 
-  getGame(id: string) {
-    return this.http.get(`${this.API_URI}/games/${id}`);
+  getGame(id: string): Observable<Game> {
+    return this.http.get<Game>(`${this.API_URI}/games/${id}`);
   }
 
   saveGame(game: Game) {
@@ -29,7 +29,7 @@ export class GamesService {
     return this.http.delete(`${this.API_URI}/games/${id}`);
   }
 
-  updateGame(id: string, updatedGame: Game): Observable<Game> {
+  updateGame(id: string | number, updatedGame: Game): Observable<Game> {
     return this.http.put<Game>(`${this.API_URI}/games/${id}`, updatedGame);
   }
 
