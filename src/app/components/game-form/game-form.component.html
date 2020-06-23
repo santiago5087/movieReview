@@ -1,3 +1,4 @@
+<!-- 
 <div class="col-md-4 offset-md-2">
   <div class="card">
     <div class="card-body">
@@ -26,5 +27,36 @@
     <h3>{{ game.id }}. {{ game.title == '' ? 'Game Title' : game.title }}</h3>
     <p>{{ game.description == '' ? 'Write Your Description' : game.description }}</p>
     <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
+  </div>
+</div>
+-->
+
+<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+  <div fxFlex="45">
+    <form [formGroup]="movieForm" fxLayout="column" fxLayoutAlign="space-between center">
+      <mat-form-field fxFlex appearance="standard">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" type="text">
+      </mat-form-field>
+      <mat-form-field fxFlex appearance="standard">
+        <mat-label>Description</mat-label>
+        <textarea matInput rows="2"  formControlName="description"></textarea>
+      </mat-form-field>
+      <mat-form-field fxFlex appearance="standard">
+        <mat-label>Image URL</mat-label>
+        <input matInput type="url"  formControlName="image">
+      </mat-form-field>
+      <button mat-flat-button (click)="edit ? updateGame() : saveNewGame()">Save</button>
+    </form>
+  </div>
+
+  <div fxFlex="45">
+    <img mat-card-image [src]="game.image == '' ? '/assets/no-image.png' : game.image"
+    style="height: 300px;">
+    <mat-card-content>
+      <h3>{{ game.id }}. {{ game.title == '' ? 'Game Title' : game.title }}</h3>
+      <p>{{ game.description == '' ? 'Write Your Description' : game.description }}</p>
+      <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
+    </mat-card-content>
   </div>
 </div>

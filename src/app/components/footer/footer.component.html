@@ -1,11 +1,20 @@
-<!-- Footer -->
-<footer class="page-footer font-small blue">
-
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+<div class="footer" fxLayout="row wrap" fxLayoutAlign="space-between center">
+  <div fxFlex>
+    <p>MoviewReview</p>
+    <p>All rights reserve <i class="far fa-copyright"></i> 2020</p>
   </div>
-  <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
+  <div fxFlex>
+    <a mat-mini-fab class="footer-bt" href="http://www.facebook.com" target="_blank">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a mat-mini-fab class="footer-bt" href="http://www.twitter.com" target="_blank">
+      <i class="fab fa-twitter"></i> 
+    </a>
+    <a mat-mini-fab class="footer-bt" href="http://www.youtube.com" target="_blank">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a mat-mini-fab class="footer-bt" [routerLink] fragment="header">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+  </div>
+</div>

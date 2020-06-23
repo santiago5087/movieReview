@@ -1,0 +1,18 @@
+$background-button: #424242;
+$background-footer: darkgray;
+
+.footer {
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  background-color: $background-footer;
+  height: 110px;
+}
+
+.footer-bt {
+  background-color: $background-button;
+  margin: 5px;
+  i {
+    color: white;
+  }
+}
