@@ -13,8 +13,6 @@ import { Game } from '../../models/Game';
 })
 export class GameFormComponent implements OnInit {
 
-  @HostBinding('class') classes = 'row';
-
   movieForm: FormGroup;
 
   edit = false;
@@ -66,6 +64,7 @@ export class GameFormComponent implements OnInit {
   }
 
   saveNewGame() {
+    this.game = this.movieForm.value;
     delete this.game.id;
     delete this.game.created_at;
     
@@ -73,6 +72,7 @@ export class GameFormComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
+          this.movieForm.reset()
           this.router.navigate(['/games']);
         },
         err => console.error(err));
@@ -80,11 +80,13 @@ export class GameFormComponent implements OnInit {
   }
 
   updateGame() {
+    this.game = this.movieForm.value;
     delete this.game.created_at;
     this.gamesService.updateGame(this.game.id, this.game)
       .subscribe(
         res => {
           console.log(res);
+          this.movieForm.reset()
           this.router.navigate(['/games']);
         },
         err => console.error(err)

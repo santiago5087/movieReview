@@ -1,62 +1,32 @@
-<!-- 
-<div class="col-md-4 offset-md-2">
-  <div class="card">
-    <div class="card-body">
-      <form action="">
-        <div class="form-group">
-          <input type="text" name="title" [(ngModel)]="game.title" placeholder="Title" 
-          class="form-control" autofocus>
-        </div>
-        <div class="form-group">
-          <textarea name="description" [(ngModel)]="game.description" placeholder="Description" 
-          class="form-control" rows="2"></textarea>
-        </div>
-        <div class="form-group">
-          <input type="url" name="image" [(ngModel)]="game.image" placeholder="Image URL" 
-          class="form-control">
-        </div>
-        <button class="btn btn-success btn-block" (click)="edit ? updateGame() : saveNewGame()">Save</button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="col-md-4">
-  <div class="card card-body text-center">
-    <img [src]="game.image == '' ? '/assets/no-image.png' : game.image" class="card-img-top">
-    <h3>{{ game.id }}. {{ game.title == '' ? 'Game Title' : game.title }}</h3>
-    <p>{{ game.description == '' ? 'Write Your Description' : game.description }}</p>
-    <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
-  </div>
-</div>
--->
-
-<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+<div class="dark-container" fxLayout="row wrap" fxLayoutAlign="space-between center">
   <div fxFlex="45">
-    <form [formGroup]="movieForm" fxLayout="column" fxLayoutAlign="space-between center">
-      <mat-form-field fxFlex appearance="standard">
+    <form [formGroup]="movieForm" fxLayout="column" fxLayoutAlign="space-between center"
+     (ngSubmit)="edit ? updateGame() : saveNewGame()">
+      <mat-form-field fxFlex>
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" type="text">
       </mat-form-field>
       <mat-form-field fxFlex appearance="standard">
         <mat-label>Description</mat-label>
-        <textarea matInput rows="2"  formControlName="description"></textarea>
+        <textarea matInput rows="2" formControlName="description"></textarea>
       </mat-form-field>
       <mat-form-field fxFlex appearance="standard">
         <mat-label>Image URL</mat-label>
-        <input matInput type="url"  formControlName="image">
+        <input matInput type="url" formControlName="image">
       </mat-form-field>
-      <button mat-flat-button (click)="edit ? updateGame() : saveNewGame()">Save</button>
+      <button mat-flat-button type="submit">Save</button>
     </form>
   </div>
 
   <div fxFlex="45">
-    <img mat-card-image [src]="game.image == '' ? '/assets/no-image.png' : game.image"
-    style="height: 300px;">
-    <mat-card-content>
-      <h3>{{ game.id }}. {{ game.title == '' ? 'Game Title' : game.title }}</h3>
-      <p>{{ game.description == '' ? 'Write Your Description' : game.description }}</p>
-      <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
-    </mat-card-content>
+    <mat-card class="form-card">
+      <img mat-card-image [src]="movieForm.value.image == '' ? '/assets/no-image.png' : movieForm.value.image"
+      style="height: 300px;">
+      <mat-card-content>
+        <h3>{{ game.id }}. {{ movieForm.value.title == '' ? 'Game Title' : movieForm.value.title }}</h3>
+        <p>{{ movieForm.value.description == '' ? 'Write Your Description' : movieForm.value.description }}</p>
+        <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
