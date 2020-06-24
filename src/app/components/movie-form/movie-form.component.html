@@ -1,7 +1,7 @@
 <div class="dark-container" fxLayout="row wrap" fxLayoutAlign="space-between center">
   <div fxFlex="45">
     <form [formGroup]="movieForm" fxLayout="column" fxLayoutAlign="space-between center"
-     (ngSubmit)="edit ? updateGame() : saveNewGame()">
+     (ngSubmit)="edit ? updateMovie() : saveNewMovie()">
       <mat-form-field fxFlex>
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" type="text">
@@ -23,9 +23,9 @@
       <img mat-card-image [src]="movieForm.value.image == '' ? '/assets/no-image.png' : movieForm.value.image"
       style="height: 300px;">
       <mat-card-content>
-        <h3>{{ game.id }}. {{ movieForm.value.title == '' ? 'Game Title' : movieForm.value.title }}</h3>
+        <h3>{{ movieForm.value.id }}. {{ movieForm.value.title == '' ? 'Movie Title' : movieForm.value.title }}</h3>
         <p>{{ movieForm.value.description == '' ? 'Write Your Description' : movieForm.value.description }}</p>
-        <p>{{ game.created_at | date: 'yyyy-MMM-dd' }}</p>
+        <p>{{ movieForm.value.created_at | date: 'yyyy-MMM-dd' }}</p>
       </mat-card-content>
     </mat-card>
   </div>

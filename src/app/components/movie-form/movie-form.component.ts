@@ -3,28 +3,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
-import { GamesService } from '../../services/games.service';
-import { Game } from '../../models/Game';
+import { MoviesService } from '../../services/movies.service';
+import { Movie } from '../../models/Movie';
 
 @Component({
-  selector: 'app-game-form',
-  templateUrl: './game-form.component.html',
-  styleUrls: ['./game-form.component.scss']
+  selector: 'app-movie-form',
+  templateUrl: './movie-form.component.html',
+  styleUrls: ['./movie-form.component.scss']
 })
-export class GameFormComponent implements OnInit {
+export class MovieFormComponent implements OnInit {
 
   movieForm: FormGroup;
-
   edit = false;
-  game: Game = {
-    id: 0,
-    title: '',
-    description: '',
-    image: '',
-    created_at: new Date()
-  }
 
-  constructor(private gamesService: GamesService,
+  constructor(private moviesService: MoviesService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder) { 
@@ -34,7 +26,7 @@ export class GameFormComponent implements OnInit {
   ngOnInit(): void {
     const params = this.activatedRoute.snapshot.params;
     if (params.id) {
-      this.gamesService.getGame(params.id)
+      this.moviesService.getMovie(params.id)
         .subscribe(
           res => {
             this.movieForm = this.fb.group({
@@ -45,7 +37,6 @@ export class GameFormComponent implements OnInit {
               created_at: [new Date()]
             });
             console.log(res);
-            this.game = res;
             this.edit = true;
           },
           err => console.error(err)
@@ -63,31 +54,31 @@ export class GameFormComponent implements OnInit {
     });
   }
 
-  saveNewGame() {
-    this.game = this.movieForm.value;
-    delete this.game.id;
-    delete this.game.created_at;
+  saveNewMovie() {
+    let movie: Movie = this.movieForm.value;
+    delete movie.id;
+    delete movie.created_at;
     
-    this.gamesService.saveGame(this.game)
+    this.moviesService.saveMovie(movie)
       .subscribe(
         res => {
           console.log(res);
           this.movieForm.reset()
-          this.router.navigate(['/games']);
+          this.router.navigate(['/movies']);
         },
         err => console.error(err));
 
   }
 
-  updateGame() {
-    this.game = this.movieForm.value;
-    delete this.game.created_at;
-    this.gamesService.updateGame(this.game.id, this.game)
+  updateMovie() {
+    let movie: Movie = this.movieForm.value;
+    delete movie.created_at;
+    this.moviesService.updateMovie(movie.id, movie)
       .subscribe(
         res => {
           console.log(res);
           this.movieForm.reset()
-          this.router.navigate(['/games']);
+          this.router.navigate(['/movies']);
         },
         err => console.error(err)
       );

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
-import { GameListComponent } from './components/game-list/game-list.component';
-import { GameFormComponent } from './components/game-form/game-form.component';
+import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { MovieFormComponent } from './components/movie-form/movie-form.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: "enabled",
@@ -10,10 +10,10 @@ const routerOptions: ExtraOptions = {
 }
 
 const routes: Routes = [
-  { path: '', redirectTo: '/games', pathMatch: 'full' },
-  { path: 'games', component: GameListComponent },
-  { path: 'games/add', component: GameFormComponent },
-  { path: 'games/edit/:id', component: GameFormComponent }
+  { path: '', redirectTo: '/movies', pathMatch: 'full' },
+  { path: 'movies', component: MovieListComponent },
+  { path: 'movies/add', component: MovieFormComponent },
+  { path: 'movies/edit/:id', component: MovieFormComponent }
 ];
 
 @NgModule({
