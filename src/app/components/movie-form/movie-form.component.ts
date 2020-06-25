@@ -1,7 +1,6 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Validators } from '@angular/forms';
 
 import { MoviesService } from '../../services/movies.service';
 import { Movie } from '../../models/Movie';

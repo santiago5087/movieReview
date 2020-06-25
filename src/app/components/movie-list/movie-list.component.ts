@@ -8,7 +8,8 @@ import { MoviesService } from '../../services/movies.service';
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.scss'],
   host: {
-    '[@flyInOut]' : 'true' // Se aplica al padre porque es el encargado de crear/destruir los elem.
+    '[@flyInOut]' : 'true', // Se aplica al padre porque es el encargado de crear/destruir los elem.
+    'style': 'display: block' // Para que pueda funcionar la animación sobre el container
   },
   animations: [
     flyInOut()

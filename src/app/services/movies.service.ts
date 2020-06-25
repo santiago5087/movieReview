@@ -14,23 +14,23 @@ export class MoviesService {
   constructor(private http: HttpClient) { }
 
   getMovies() {
-    return this.http.get<Movie[]>(`${this.API_URI}/games`);
+    return this.http.get<Movie[]>(`${this.API_URI}/movies`);
   }
 
   getMovie(id: string): Observable<Movie> {
-    return this.http.get<Movie>(`${this.API_URI}/games/${id}`);
+    return this.http.get<Movie>(`${this.API_URI}/movies/${id}`);
   }
 
-  saveMovie(game: Movie) {
-    return this.http.post(`${this.API_URI}/games`, game);
+  saveMovie(movie: Movie) {
+    return this.http.post(`${this.API_URI}/movies`, movie);
   }
 
   deleteMovie(id: string) {
-    return this.http.delete(`${this.API_URI}/games/${id}`);
+    return this.http.delete(`${this.API_URI}/movies/${id}`);
   }
 
-  updateMovie(id: string | number, updatedGame: Movie): Observable<Movie> {
-    return this.http.put<Movie>(`${this.API_URI}/games/${id}`, updatedGame);
+  updateMovie(id: string | number, updatedMovie: Movie): Observable<Movie> {
+    return this.http.put<Movie>(`${this.API_URI}/movies/${id}`, updatedMovie);
   }
 
 }
