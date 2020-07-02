@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
-import { MovieListComponent } from './components/movie-list/movie-list.component';
-import { MovieFormComponent } from './components/movie-form/movie-form.component';
+import { ReviewListComponent } from './components/review-list/review-list.component';
+import { ReviewFormComponent } from './components/review-form/review-form.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: "enabled",
@@ -10,10 +10,10 @@ const routerOptions: ExtraOptions = {
 }
 
 const routes: Routes = [
-  { path: '', redirectTo: '/movies', pathMatch: 'full' },
-  { path: 'movies', component: MovieListComponent },
-  { path: 'movies/add', component: MovieFormComponent },
-  { path: 'movies/edit/:id', component: MovieFormComponent }
+  { path: '', redirectTo: '/reviews', pathMatch: 'full' },
+  { path: 'reviews', component: ReviewListComponent },
+  { path: 'reviews/add', component: ReviewFormComponent },
+  { path: 'reviews/edit/:id', component: ReviewFormComponent }
 ];
 
 @NgModule({

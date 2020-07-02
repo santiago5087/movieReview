@@ -7,8 +7,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { MovieFormComponent } from './components/movie-form/movie-form.component'
-import { MovieListComponent } from './components/movie-list/movie-list.component';
+import { ReviewFormComponent } from './components/review-form/review-form.component'
+import { ReviewListComponent } from './components/review-list/review-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -18,15 +18,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 
-import { MoviesService } from './services/movies.service';
+import { ReviewsService } from './services/reviews.service';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    MovieFormComponent,
-    MovieListComponent,
+    ReviewFormComponent,
+    ReviewListComponent,
     FooterComponent
   ],
   imports: [
@@ -44,7 +44,7 @@ import { FooterComponent } from './components/footer/footer.component';
     ReactiveFormsModule
   ],
   providers: [
-    MoviesService
+    ReviewsService
   ],
   bootstrap: [AppComponent]
 })

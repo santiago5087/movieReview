@@ -1,7 +1,7 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="space-between center">
   <div fxFlex="45">
-    <form [formGroup]="movieForm" fxLayout="column" fxLayoutAlign="space-between center"
-     (ngSubmit)="edit ? updateMovie() : saveNewMovie()">
+    <form [formGroup]="reviewForm" fxLayout="column" fxLayoutAlign="space-between center"
+     (ngSubmit)="edit ? updateReview() : saveNewReview()">
       <mat-form-field fxFlex>
         <mat-label>Title</mat-label>
         <input matInput formControlName="title" type="text">
@@ -20,12 +20,12 @@
 
   <div fxFlex="45">
     <mat-card class="form-card">
-      <img mat-card-image [src]="movieForm.value.image == '' ? '/assets/no-image.png' : movieForm.value.image"
+      <img mat-card-image [src]="reviewForm.value.image == '' ? '/assets/no-image.png' : reviewForm.value.image"
       style="height: 300px;">
       <mat-card-content>
-        <h3>{{ movieForm.value.id }}. {{ movieForm.value.title == '' ? 'Movie Title' : movieForm.value.title }}</h3>
-        <p>{{ movieForm.value.description == '' ? 'Write Your Description' : movieForm.value.description }}</p>
-        <p>{{ movieForm.value.created_at | date: 'yyyy-MMM-dd' }}</p>
+        <h3>{{ reviewForm.value.id }}. {{ reviewForm.value.title == '' ? 'review Title' : reviewForm.value.title }}</h3>
+        <p>{{ reviewForm.value.description == '' ? 'Write Your Description' : reviewForm.value.description }}</p>
+        <p>{{ reviewForm.value.created_at | date: 'yyyy-MMM-dd' }}</p>
       </mat-card-content>
     </mat-card>
   </div>
