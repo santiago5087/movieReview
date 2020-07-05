@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ReviewFormComponent } from './components/review-form/review-form.component'
 import { ReviewListComponent } from './components/review-list/review-list.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -48,7 +49,8 @@ import { LoginComponent } from './components/login/login.component';
     MatDialogModule
   ],
   providers: [
-    ReviewsService
+    ReviewsService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
