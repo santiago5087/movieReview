@@ -1,0 +1,32 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <h2 mat-dialog-title>Log in</h2>
+
+  <form novalidate fxLayout="column" fxLayoutAlign="center center" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content fxLayout="column" fxLayoutAlign="center center">
+      <mat-form-field fxFlex appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" [(ngModel)]="user.username"
+          #username="ngModel" name="username" required>
+          <mat-error *ngIf="username.errors?.required">Username is invalid</mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex appearance="fill">
+        <mat-label>Password</mat-label>
+        <input  matInput type="password" [(ngModel)]="user.password"
+          #password="ngModel" name="password" required>
+          <mat-error *ngIf="password.errors?.required">Password is invalid</mat-error>
+      </mat-form-field>
+    </mat-dialog-content>
+
+
+    <mat-dialog-actions fxFlex style="width: 100%;">
+      <div fxLayout="column" fxLayouAlign="center center" style="width: 100%;">
+        <button color="accent" fxFlex type="submit" mat-raised-button>Login</button>
+        <div fxLayoutAlign="space-between center">
+          <a fxFlex class="sign-up" matLine mat-dialog-close routerLink="">Sign up</a>
+          <a fxFlex (click)="onNoClick()" matLine class="cancel">Cancel</a>
+        </div>
+      </div>
+    </mat-dialog-actions>
+  </form>
+</div>

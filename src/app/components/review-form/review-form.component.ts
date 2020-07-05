@@ -39,6 +39,8 @@ export class ReviewFormComponent implements OnInit {
               });
               console.log(res);
               this.edit = true;
+            } else {
+              throw new Error(res.err.sqlMessage);
             }
           },
           err => console.error(err)

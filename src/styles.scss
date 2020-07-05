@@ -42,3 +42,8 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   color: white;
   background-color: #333;
 }
+
+.my-dark-theme2 {
+  @include angular-material-theme($dark-theme);
+  color: white;
+}
