@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  username: string;
+  username: string = undefined;
   subscription: Subscription;
 
   constructor(public dialog: MatDialog,
@@ -21,14 +21,21 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.auth.loadUserCredentials();
     this.subscription = this.auth.getUsername().subscribe(usrn => this.username = usrn);
+    /* Se suscribe pero aún no se le ha emitido ningún valor de "username", el cual se emite cuando se termina 
+    de realizar la petición GET a users/checkToken 
+    */
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  openLogin() {
+  openLogin(): void {
     this.dialog.open(LoginComponent, { width: "300px", height: "370px" });
+  }
+
+  logOut(): void {
+    this.auth.logOut();
   }
 
 }

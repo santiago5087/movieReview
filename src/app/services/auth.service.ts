@@ -8,6 +8,7 @@ interface AuthResponse {
   success: string;
   error?: any;
   token?: string;
+  user?: any;
 }
 
 interface Credentials {
@@ -20,11 +21,11 @@ interface Credentials {
 })
 export class AuthService {
 
-  private tokenKey = 'JWT';
-  private isAuthenticated = false;
-  private username: Subject<string> = new Subject<string>()
-  private authToken: string = undefined;
-  baseURL = 'http://localhost:3000/';
+  tokenKey = 'JWT';
+  isAuthenticated = false;
+  username: Subject<string> = new Subject<string>();
+  authToken: string = undefined;
+  baseURL = 'http://localhost:3000/api/';
 
   constructor(public http: HttpClient) { }
 
@@ -32,6 +33,7 @@ export class AuthService {
     this.http.get<AuthResponse>(this.baseURL + 'users/checkToken')
       .subscribe(res => {
         console.log("JWT valid!", res);
+        this.sendUsername(res.user.username);
       },
       err => {
         console.log("JWT invalid!", err);
@@ -51,7 +53,7 @@ export class AuthService {
     this.isAuthenticated = false;
     this.clearUsername();
     this.authToken = undefined;
-    localStorage.removeItem(this.authToken);
+    localStorage.removeItem(this.tokenKey);
   }
 
   useCredentials(credentials: Credentials): void {
@@ -61,14 +63,14 @@ export class AuthService {
   }
 
   storeUserCredentials(credentials: Credentials): void {
-    localStorage.setItem(this.authToken, JSON.stringify(credentials));
-    this.loadUserCredentials();
+    localStorage.setItem(this.tokenKey, JSON.stringify(credentials));
+    this.useCredentials(credentials);
   }
 
   loadUserCredentials(): void  {
     const credentials: Credentials = JSON.parse(localStorage.getItem(this.tokenKey));
     console.log('loadUserCredentilas', credentials);
-    if (credentials && credentials.username) {
+    if (credentials && credentials) {
       this.useCredentials(credentials);
       if (this.authToken) {
         this.checkJWT(); // Para verificar si el token aún es válido
@@ -79,7 +81,7 @@ export class AuthService {
   logIn(username: string, password: string): Observable<any> {
     return this.http.post<AuthResponse>(this.baseURL + 'users/login', { username, password })
       .pipe(map(res => {
-        this.storeUserCredentials({ username, token: res.token });
+        this.storeUserCredentials({ "username": username, "token": res.token });
         return { 'success': true, 'username': username }
       }),
       catchError(err => throwError(err)));
@@ -99,8 +101,8 @@ export class AuthService {
     return this.authToken;
   }
 
-  getUsername(): Subject<string> {
-    return this.username
+  getUsername() {
+    return this.username.asObservable();
   }
 
 }

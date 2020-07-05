@@ -9,7 +9,9 @@
   <a mat-flat-button routerLink="/reviews/add" routerLinkActive="active">
     <i class="fas fa-plus-circle"></i> Add Movies
   </a>
-  <a mat-flat-button (click)="openLogin()">
+  <span *ngIf="username">{{ username }}</span>
+  <button *ngIf="username" mat-button (onClick)="logOut()">Log Out</button>
+  <a *ngIf="!username" mat-flat-button (click)="openLogin()">
     <i class="fas fa-user"></i> Login
   </a>
 </mat-toolbar>
