@@ -19,6 +19,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MdePopoverModule } from '@material-extended/mde';
 
 import { ReviewsService } from './services/reviews.service';
 import { FooterComponent } from './components/footer/footer.component';
@@ -46,7 +49,10 @@ import { LoginComponent } from './components/login/login.component';
     MatInputModule,
     MatCardModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule,
+    MdePopoverModule,
+    MatListModule
   ],
   providers: [
     ReviewsService,

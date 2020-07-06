@@ -9,3 +9,30 @@ a {
 .logo {
   padding-left: 10px;
 }
+
+.popover-arrow {
+  border-width: 0px 8px 10px;
+  border-style: solid;
+  border-color: transparent transparent white;
+  right: 50px;
+  width: 0px;
+  margin-left: auto;
+}
+
+.popover-trigger {
+  cursor: pointer;
+  padding: 0 !important;
+  margin-left: 30px;
+}
+
+.popover-content {
+  padding: 0;
+  margin: 0;
+  border-radius: 0px;
+}
+
+.profile-item {
+  text-decoration: none;
+  font-size: smaller !important;
+  color: white;
+}

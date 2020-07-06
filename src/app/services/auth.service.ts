@@ -11,9 +11,10 @@ interface AuthResponse {
   user?: any;
 }
 
-interface Credentials {
+interface UserData {
   username: string;
-  token: string;
+  email: string;
+  profilePicture: string;
 }
 
 @Injectable({
@@ -22,8 +23,9 @@ interface Credentials {
 export class AuthService {
 
   tokenKey = 'JWT';
+  userKey = 'USK';
   isAuthenticated = false;
-  username: Subject<string> = new Subject<string>();
+  userData: Subject<UserData> = new Subject<UserData>();
   authToken: string = undefined;
   baseURL = 'http://localhost:3000/api/';
 
@@ -33,7 +35,14 @@ export class AuthService {
     this.http.get<AuthResponse>(this.baseURL + 'users/checkToken')
       .subscribe(res => {
         console.log("JWT valid!", res);
-        this.sendUsername(res.user.username);
+
+        let user: UserData = { 
+          username: res.user.username,
+          profilePicture: res.user.profilePicture,
+          email: res.user.email
+        }
+
+        this.sendUserData(user);
       },
       err => {
         console.log("JWT invalid!", err);
@@ -41,37 +50,40 @@ export class AuthService {
       });
   }
 
-  sendUsername(name: string): void {
-    this.username.next(name);
+  sendUserData(user: UserData): void {
+    this.userData.next(user);
   }
 
-  clearUsername(): void {
-    this.username.next(undefined);
+  clearUserData(): void {
+    this.userData.next(undefined);
   }
 
   destroyUserCredentials(): void {
     this.isAuthenticated = false;
-    this.clearUsername();
+    this.clearUserData();
     this.authToken = undefined;
+    localStorage.removeItem(this.userKey);
     localStorage.removeItem(this.tokenKey);
   }
 
-  useCredentials(credentials: Credentials): void {
+  useCredentials(userData: UserData, token: string): void {
     this.isAuthenticated = true;
-    this.sendUsername(credentials.username);
-    this.authToken = credentials.token;
+    this.sendUserData(userData);
+    this.authToken = token;
   }
 
-  storeUserCredentials(credentials: Credentials): void {
-    localStorage.setItem(this.tokenKey, JSON.stringify(credentials));
-    this.useCredentials(credentials);
+  storeUserCredentials(userData: UserData, token: string): void {
+    localStorage.setItem(this.userKey, JSON.stringify(userData));
+    localStorage.setItem(this.tokenKey, token);
+    this.useCredentials(userData, token);
   }
 
   loadUserCredentials(): void  {
-    const credentials: Credentials = JSON.parse(localStorage.getItem(this.tokenKey));
-    console.log('loadUserCredentilas', credentials);
-    if (credentials && credentials) {
-      this.useCredentials(credentials);
+    const userData: UserData = JSON.parse(localStorage.getItem(this.userKey));
+    const token: string = localStorage.getItem(this.tokenKey);
+    console.log('loadUserData', userData);
+    if (userData && userData.username) {
+      this.useCredentials(userData, token);
       if (this.authToken) {
         this.checkJWT(); // Para verificar si el token aún es válido
       }
@@ -81,8 +93,12 @@ export class AuthService {
   logIn(username: string, password: string): Observable<any> {
     return this.http.post<AuthResponse>(this.baseURL + 'users/login', { username, password })
       .pipe(map(res => {
-        this.storeUserCredentials({ "username": username, "token": res.token });
-        return { 'success': true, 'username': username }
+        this.storeUserCredentials({ 
+          "username": res.user.username, 
+          "profilePicture": res.user.profilePicture,
+          "email": res.user.email }, res.token);
+
+        return { 'success': true }
       }),
       catchError(err => throwError(err)));
       /* catchError atrapa un error cuando sucede y retorna otro observable o arroja (throw) un error
@@ -101,8 +117,8 @@ export class AuthService {
     return this.authToken;
   }
 
-  getUsername() {
-    return this.username.asObservable();
+  getUserData() {
+    return this.userData.asObservable();
   }
 
 }

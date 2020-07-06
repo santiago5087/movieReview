@@ -12,16 +12,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  username: string = undefined;
+  userData: any = undefined;
   subscription: Subscription;
+  profilePicture: string = undefined;
 
   constructor(public dialog: MatDialog,
     public auth: AuthService) { }
 
   ngOnInit(): void {
     this.auth.loadUserCredentials();
-    this.subscription = this.auth.getUsername().subscribe(usrn => this.username = usrn);
-    /* Se suscribe pero aún no se le ha emitido ningún valor de "username", el cual se emite cuando se termina 
+    this.subscription = this.auth.getUserData().subscribe(usr => this.userData = usr);
+    /* Se suscribe pero aún no se le ha emitido ningún valor de "userData", el cual se emite cuando se termina 
     de realizar la petición GET a users/checkToken 
     */
   }
@@ -34,8 +35,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.dialog.open(LoginComponent, { width: "300px", height: "370px" });
   }
 
-  logOut(): void {
+  logOut() {
     this.auth.logOut();
+    console.log('logout!');
   }
 
 }

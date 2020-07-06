@@ -3,15 +3,46 @@
     <i class="fas fa-film fa-lg fa-spin"></i> <span class="logo">MovieReview</span>
   </a>
   <span class="flex-spacer"></span>
-  <a mat-flat-button routerLink="/reviews" routerLinkActive="active">
+  <!-- <a mat-flat-button routerLink="/reviews" routerLinkActive="active">
     <i class="fas fa-tape"></i> Movies
-  </a>
-  <a mat-flat-button routerLink="/reviews/add" routerLinkActive="active">
+  </a> -->
+  <a *ngIf="userData" mat-flat-button routerLink="/reviews/add" routerLinkActive="active">
     <i class="fas fa-plus-circle"></i> Add Movies
   </a>
-  <span *ngIf="username">{{ username }}</span>
-  <button *ngIf="username" mat-button (onClick)="logOut()">Log Out</button>
-  <a *ngIf="!username" mat-flat-button (click)="openLogin()">
-    <i class="fas fa-user"></i> Login
+  <a *ngIf="!userData" mat-flat-button (click)="openLogin()">
+    <i class="fas fa-user"></i> Login 
   </a>
+
+  <!-- Popover trigger -->
+  <mat-card-header *ngIf="userData" class="popover-trigger" mat-raised-button color="primary"
+    [mdePopoverTriggerFor]="appPopover"
+    mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger">
+    <img mat-card-avatar src="{{ userData.profilePicture }}" alt="my profile picture">
+    <mat-card-title style="margin: 0; padding-top: 4px !important;">{{ userData.username}}</mat-card-title>
+  </mat-card-header>
+
+  <div style="width: 15px;"></div>
+  
+  <!-- Popover content -->
+  <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false" 
+    [mdeFocusTrapEnabled]="false" class="my-dark-theme2">
+    <div class="popover-arrow"></div>
+
+    <mat-card fxLayout="column" fxLayoutAlign="center start" class="popover-content">
+      <mat-list color="accent" role="list">
+        <mat-list-item role="listitem">
+          <a fxFlex class="profile-item" matLine routerLink="">My profile</a>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <a fxFlex class="profile-item" matLine routerLink="">My reviews</a>
+        </mat-list-item>
+        <mat-list-item role="listitem">
+          <a fxFlex class="profile-item" matLine style="cursor: pointer;" (click)="logOut()">
+            Log out
+          </a>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+    
+  </mde-popover>
 </mat-toolbar>
