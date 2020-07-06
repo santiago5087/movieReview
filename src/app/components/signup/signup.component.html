@@ -1,0 +1,56 @@
+<div fxLayout="column wrap" fxLayoutAlign="space-around center">
+  <div fxFlex="45">
+    <mat-card class="profile-card">
+      <img mat-card-avatar style="height: 180px; width: 180px;" 
+        [src]="signupForm.value.profilePicture == '' ? '/assets/no-image-avatar.png' : signupForm.value.profilePicture">
+    </mat-card>
+  </div>
+
+  <div fxFlex="45">
+    <form #form="ngForm" [formGroup]="signupForm" fxLayout="column" fxLayoutAlign="space-between center"
+     (ngSubmit)="onSubmit()">
+     <table style="text-align: center;">
+       <tr>
+         <mat-form-field style="width: 150px; margin-right: 20px;">
+           <mat-label>Username</mat-label>
+           <input matInput formControlName="username" type="text" required>
+         </mat-form-field>
+         <mat-form-field style="width: 150px;">
+           <mat-label>Email</mat-label>
+           <input matInput formControlName="email" type="email" required email>
+         </mat-form-field>
+       </tr>
+       <tr>
+         <mat-form-field style="width: 150px; margin-right: 20px;">
+           <mat-label>Password</mat-label>
+           <input matInput formControlName="password" type="password" required>
+         </mat-form-field> 
+         <mat-form-field style="width: 150px;">
+           <mat-label>Verify password</mat-label>
+           <input matInput formControlName="passwordVer" type="password" required>
+         </mat-form-field>
+       </tr>
+       <tr>
+        <mat-error *ngIf="signupForm.errors?.comparePwds && (signupForm.touched || signupForm.dirty)"
+        style="font-size: x-small;">
+         Passwords must match.
+       </mat-error>
+       </tr>
+       <tr>
+         <mat-form-field fxFlex appearance="standard">
+           <mat-label>Profile picture URL</mat-label>
+           <input matInput type="url" formControlName="profilePicture">
+         </mat-form-field>
+       </tr>
+      <button mat-flat-button color="accent" type="submit" class="signup-button" [disabled]="!signupForm.valid">
+        Sign up
+      </button>
+      <div fxLayoutAlign="space-between center" style="margin-top: 10px;">
+        <div fxFlex style="text-align: start;">
+          <a (click)="onNoClick()" matLine class="cancel">Cancel</a>
+        </div>
+      </div>
+     </table>
+    </form>
+  </div>
+</div>

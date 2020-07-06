@@ -100,9 +100,14 @@ export class AuthService {
 
         return { 'success': true }
       }),
-      catchError(err => throwError(err)));
+      catchError(err => throwError(err.error)));
       /* catchError atrapa un error cuando sucede y retorna otro observable o arroja (throw) un error
       */
+  }
+
+  signUp(data: any): Observable<any> {
+    return this.http.post(this.baseURL + 'users/signup', data)
+      .pipe(catchError(err => throwError(err.error)));
   }
 
   logOut(): void {

@@ -21,11 +21,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MdePopoverModule } from '@material-extended/mde';
 
 import { ReviewsService } from './services/reviews.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { LoginComponent } from './components/login/login.component';
     ReviewFormComponent,
     ReviewListComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { LoginComponent } from './components/login/login.component';
     MatDialogModule,
     MatDividerModule,
     MdePopoverModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule
   ],
   providers: [
     ReviewsService,

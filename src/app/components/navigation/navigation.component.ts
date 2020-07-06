@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import { LoginComponent } from '../login/login.component';
+import { SignupComponent } from '../signup/signup.component';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -33,6 +34,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   openLogin(): void {
     this.dialog.open(LoginComponent, { width: "300px", height: "370px" });
+  }
+
+  openSignup(): void {
+    this.dialog.open(SignupComponent, { width: "450px", height: "585px" });
   }
 
   logOut() {

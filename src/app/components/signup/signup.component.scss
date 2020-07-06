@@ -1,4 +1,16 @@
-.sign-up {
+$bg-light: #494949;
+
+.profile-card {
+  background-color: $bg-light;
+  margin-bottom: 25px;
+}
+
+.signup-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.sign-in {
   text-decoration: none;
   font-size: smaller;
   margin-top: 10px;

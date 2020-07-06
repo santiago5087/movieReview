@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
-import { MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
+import { SignupComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +13,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>,
-    public auth: AuthService,
+  constructor(private dialogRef: MatDialogRef<LoginComponent>,
+    private auth: AuthService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     overlayContainer: OverlayContainer) { 
       overlayContainer.getContainerElement().classList.add('my-dark-theme2');
     }
@@ -32,8 +36,14 @@ export class LoginComponent implements OnInit {
         }
       },
       err => {
+        this.snackBar.open(err.err.message, "Ok!", { duration: 6000 });
         console.log(err);
       });
+  }
+
+  openSignup(): void {
+    this.onNoClick();
+    this.dialog.open(SignupComponent, { width: "450px", height: "585px" });
   }
 
   onNoClick(): void {

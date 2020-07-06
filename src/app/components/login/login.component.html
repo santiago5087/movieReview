@@ -24,8 +24,12 @@
       <div fxLayout="column" fxLayouAlign="center center" style="width: 100%;">
         <button color="accent" fxFlex type="submit" mat-raised-button>Login</button>
         <div fxLayoutAlign="space-between center">
-          <a fxFlex class="sign-up" matLine mat-dialog-close routerLink="">Sign up</a>
-          <a fxFlex (click)="onNoClick()" matLine class="cancel">Cancel</a>
+          <div fxFlex>
+            <a class="sign-up" matLine mat-dialog-close (click)="openSignup()">Sign up</a>
+          </div>
+          <div fxFlex style="text-align: end;">
+            <a (click)="onNoClick()" matLine class="cancel">Cancel</a>
+          </div>
         </div>
       </div>
     </mat-dialog-actions>
