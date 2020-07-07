@@ -1,5 +1,30 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="space-between center">
   <div fxFlex="45">
+
+    <form *ngIf="!edit" [formGroup]="searchMovieForm" (ngSubmit)="searchMovie()"
+      fxLayout="column" fxLayoutAlign="space-around start">
+      <h4 matLine>Search Movie</h4>
+
+      <div fxFlex>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+          <mat-form-field fxFlex style="margin: 0 5px">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="movieTitle" type="text" required>
+          </mat-form-field>
+          <mat-form-field fxFlex style="margin: 0 5px">
+            <mat-label>Year</mat-label>
+            <input matInput formControlName="movieYear" type="text">
+          </mat-form-field>
+        </div>
+      </div>
+      <button fxFlex mat-icon-button class="search-button" color="accent" type="submit">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </form>
+
+
+
+
     <form [formGroup]="reviewForm" fxLayout="column" fxLayoutAlign="space-between center"
      (ngSubmit)="edit ? updateReview() : saveNewReview()">
       <mat-form-field fxFlex>

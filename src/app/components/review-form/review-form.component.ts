@@ -1,8 +1,9 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ReviewsService } from '../../services/reviews.service';
+import { MovieService } from '../../services/movie.service';
 import { Review } from '../../models/Review';
 
 @Component({
@@ -13,9 +14,11 @@ import { Review } from '../../models/Review';
 export class ReviewFormComponent implements OnInit {
 
   reviewForm: FormGroup;
+  searchMovieForm: FormGroup;
   edit = false;
 
   constructor(private reviewsService: ReviewsService,
+    private movieService: MovieService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder) { 
@@ -56,6 +59,19 @@ export class ReviewFormComponent implements OnInit {
       image: [''],
       created_at: [new Date()]
     });
+
+    this.searchMovieForm = this.fb.group({
+      movieTitle: ['', Validators.required],
+      movieYear: ['']
+    });
+  }
+
+  searchMovie() {
+    let movie: any = this.searchMovieForm.value;
+    this.movieService.getMovie(movie.movieTitle, movie.movieYear)
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
   saveNewReview() {
