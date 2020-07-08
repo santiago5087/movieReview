@@ -8,7 +8,7 @@ import { map, catchError } from 'rxjs/operators';
 export class MovieService {
 
   omdbApiKey = "ac49107d";
-  omdbBaseURL = "http://www.omdbapi.com/?apikey=";
+  omdbBaseURL = "https://www.omdbapi.com/?apikey=";
 
   constructor(private http: HttpClient) { }
 
