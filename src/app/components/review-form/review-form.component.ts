@@ -78,6 +78,7 @@ export class ReviewFormComponent implements OnInit {
           this.errMsg.err = false
 
           this.review.movieTitle = res.Title;
+          this.review.type = res.Type;
           this.review.movieYear = res.Year;
           this.review.movieGenre = res.Genre.split(",");
           this.review.moviePlot = res.Plot;

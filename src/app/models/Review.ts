@@ -1,5 +1,6 @@
 export class Review {
   id: number;
+  type: string;
   movieTitle: string;
   movieYear: string;
   movieGenre: string[];

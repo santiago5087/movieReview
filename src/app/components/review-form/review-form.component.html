@@ -1,46 +1,38 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="space-between center">
-  <div fxFlex="45">
+  <div fxFlex="45" fxLayout="column" fxLayoutAlign="space-between center">
 
-    <form *ngIf="!edit" [formGroup]="searchMovieForm" (ngSubmit)="searchMovie()"
-      fxLayout="column" fxLayoutAlign="space-around start">
-      <h4 matLine>Search Movie</h4>
-
-      <div fxFlex>
-        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
-          <mat-form-field fxFlex style="margin: 0 5px">
-            <mat-label>Title</mat-label>
-            <input matInput formControlName="movieTitle" type="text" required>
-          </mat-form-field>
-          <mat-form-field fxFlex style="margin: 0 5px">
-            <mat-label>Year</mat-label>
-            <input matInput formControlName="movieYear" type="text">
-          </mat-form-field>
+    <div fxFlex style="width: 70%;">
+      <form *ngIf="!edit" [formGroup]="searchMovieForm" (ngSubmit)="searchMovie()"
+        fxLayout="column" fxLayoutAlign="space-around start">
+        <h4 matLine>Search Movie</h4>
+        <div fxFlex>
+          <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+            <mat-form-field fxFlex style="margin: 0 5px">
+              <mat-label>Title</mat-label>
+              <input matInput formControlName="movieTitle" type="text" required>
+            </mat-form-field>
+            <mat-form-field fxFlex style="margin: 0 5px">
+              <mat-label>Year</mat-label>
+              <input matInput formControlName="movieYear" type="text">
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-      <button fxFlex mat-icon-button class="search-button" color="accent" type="submit">
-        <i class="fas fa-search"></i> Search
-      </button>
-    </form>
+        <button fxFlex mat-icon-button class="search-button" color="accent" type="submit">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </form>
+    </div>
 
-
-
-
-    <form [formGroup]="reviewForm" fxLayout="column" fxLayoutAlign="space-between center"
-     (ngSubmit)="edit ? updateReview() : saveNewReview()">
-      <mat-form-field fxFlex>
-        <mat-label>Title</mat-label>
-        <input matInput formControlName="title" type="text">
-      </mat-form-field>
-      <mat-form-field fxFlex appearance="standard">
-        <mat-label>Description</mat-label>
-        <textarea matInput rows="2" formControlName="description"></textarea>
-      </mat-form-field>
-      <mat-form-field fxFlex appearance="standard">
-        <mat-label>Image URL</mat-label>
-        <input matInput type="url" formControlName="image">
-      </mat-form-field>
-      <button mat-flat-button type="submit">Save</button>
-    </form>
+    <div fxFlex style="width: 75%; margin-top: 60px;">
+      <form [formGroup]="reviewForm" fxLayout="column" fxLayoutAlign="space-between center"
+       (ngSubmit)="edit ? updateReview() : saveNewReview()">
+        <mat-form-field fxFlex appearance="standard" style="width: 80%;">
+          <mat-label>Description</mat-label>
+          <textarea matInput rows="15" formControlName="description" required></textarea>
+        </mat-form-field>
+        <button mat-raised-button type="submit" [disabled]="!reviewForm.valid">Send!</button>
+      </form>
+    </div>
   </div>
 
   <div fxFlex="45">
@@ -48,13 +40,12 @@
       <mat-card-title-group style="margin: 10px 0;">
         <mat-card-title>{{ review.movieTitle ? review.movieTitle : 'Movie Title' }}</mat-card-title>
         <mat-card-subtitle style="margin-bottom: 5px;">
-          Type - {{ review.movieYear ? review.movieYear: 'Movie Year' }}
+          {{ review.type ? review.type : 'Type' }} {{ review.movieYear ? review.movieYear: 'Movie Year' }}
         </mat-card-subtitle>
         <div>
           <i class="fas fa-star" style="color: gold; margin-right: 3px;"></i>
           {{ review.movieRating ? review.movieRating : 0.0 }} 
-          <!-- <img src="/assets/imdb-icon.png" alt="IMDb">  -->
-          <mat-chip selected="true" color="primary">IMDb</mat-chip>
+          <mat-chip selected="true" class="imdb">IMDb</mat-chip>
         </div>
       </mat-card-title-group>
       <img mat-card-image [src]="(!review.moviePoster || review.moviePoster=='N/A')? 
