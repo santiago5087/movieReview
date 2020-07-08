@@ -15,6 +15,8 @@ export class ReviewFormComponent implements OnInit {
 
   reviewForm: FormGroup;
   searchMovieForm: FormGroup;
+  review: Review = new Review();
+  errMsg = { err: false, msg: "" };
   edit = false;
 
   constructor(private reviewsService: ReviewsService,
@@ -71,6 +73,21 @@ export class ReviewFormComponent implements OnInit {
     this.movieService.getMovie(movie.movieTitle, movie.movieYear)
       .subscribe(res => {
         console.log(res);
+
+        if (res.Response === "True") {
+          this.errMsg.err = false
+
+          this.review.movieTitle = res.Title;
+          this.review.movieYear = res.Year;
+          this.review.movieGenre = res.Genre.split(",");
+          this.review.moviePlot = res.Plot;
+          this.review.moviePoster = res.Poster;
+          this.review.movieRating = res.Ratings[0].Value;
+        } else {
+          this.errMsg.err = true;
+          this.errMsg.msg = res.Error;
+        }
+
       });
   }
 

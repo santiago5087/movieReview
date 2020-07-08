@@ -9,19 +9,17 @@ export class MovieService {
 
   omdbApiKey = "ac49107d";
   omdbBaseURL = "https://www.omdbapi.com/?apikey=";
+  sendRequest = false;
 
   constructor(private http: HttpClient) { }
 
   getMovie(movieTitle: string, movieYear: string) {
+    this.sendRequest = true
     return this.http.get<any>(this.omdbBaseURL + this.omdbApiKey + "&t=" + movieTitle + "&y=" + movieYear)
       .pipe(map(res => {
-        // if (res.response === "True") {
-        // }
+        this.sendRequest = false;
         return res
       }));
   }
-
-
-
 
 }

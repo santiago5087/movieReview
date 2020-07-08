@@ -45,12 +45,28 @@
 
   <div fxFlex="45">
     <mat-card class="form-card">
-      <img mat-card-image [src]="reviewForm.value.image == '' ? '/assets/no-image.png' : reviewForm.value.image"
-      style="height: 300px;">
-      <mat-card-content>
-        <h3>{{ reviewForm.value.id }}. {{ reviewForm.value.title == '' ? 'review Title' : reviewForm.value.title }}</h3>
-        <p>{{ reviewForm.value.description == '' ? 'Write Your Description' : reviewForm.value.description }}</p>
-        <p>{{ reviewForm.value.created_at | date: 'yyyy-MMM-dd' }}</p>
+      <mat-card-title-group style="margin: 10px 0;">
+        <mat-card-title>{{ review.movieTitle ? review.movieTitle : 'Movie Title' }}</mat-card-title>
+        <mat-card-subtitle style="margin-bottom: 5px;">
+          Type - {{ review.movieYear ? review.movieYear: 'Movie Year' }}
+        </mat-card-subtitle>
+        <div>
+          <i class="fas fa-star" style="color: gold; margin-right: 3px;"></i>
+          {{ review.movieRating ? review.movieRating : 0.0 }} 
+          <!-- <img src="/assets/imdb-icon.png" alt="IMDb">  -->
+          <mat-chip selected="true" color="primary">IMDb</mat-chip>
+        </div>
+      </mat-card-title-group>
+      <img mat-card-image [src]="(!review.moviePoster || review.moviePoster=='N/A')? 
+      '/assets/no-image.png' : review.moviePoster">
+      <mat-card-content *ngIf="review">
+        <p>{{ review.moviePlot }}</p>
+        <!-- <p>{{ reviewForm.value.created_at | date: 'yyyy-MMM-dd' }}</p> -->
+        <mat-chip-list>
+          <mat-chip selected="true" color="accent" style="font-size: small;" *ngFor="let genre of review.movieGenre">
+            {{ genre }}
+          </mat-chip>
+        </mat-chip-list>
       </mat-card-content>
     </mat-card>
   </div>

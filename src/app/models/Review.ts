@@ -1,8 +1,8 @@
-export interface Review {
+export class Review {
   id: number;
   movieTitle: string;
   movieYear: string;
-  movieGenre: string;
+  movieGenre: string[];
   moviePlot: string;
   moviePoster: string;
   movieRating: string;
