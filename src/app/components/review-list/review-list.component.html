@@ -1,17 +1,38 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="space-between center">
   <mat-card class="review-card" *ngFor="let review of reviews">
     <mat-card-header>
-      <img mat-card-avatar src="https://www.pphfoundation.ca/wp-content/uploads/2018/05/default-avatar.png" >
-      <mat-card-title>Name User</mat-card-title>
-      <mat-card-subtitle>{{ review.movieTitle }}</mat-card-subtitle>
+      <img mat-card-avatar [src]="review.profilePicture" >
+      <mat-card-title>{{ review.username }}</mat-card-title>
+      <mat-card-subtitle>{{ review.movieTitle + ' - ' + review.movieYear }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="review.moviePoster" alt="review.movieTitle">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+      <img fxFlex mat-card-image class="poster-img" [src]="review.moviePoster" alt="review.movieTitle">
+      <div fxFlex>
+        <p><strong>Plot</strong></p>
+        <p style="font-size: smaller;">{{ review.moviePlot }}</p>
+      </div>
+    </div>
     <mat-card-content>
-      <p>{{ review.moviePlot }}</p>
+      <p style="margin: 15px 0px;">
+        <span class="user-card"><strong>User Rating: </strong></span> 
+        {{ review.userRating }}  <i class="fas fa-star" style="color: gold; margin-right: 3px;"></i>
+      </p>
+      <p><strong class="user-card">User Review </strong>
+        <span style="font-style: italic;">{{ review.created_at | date }}</span> 
+      </p>
+      <p>{{ review.review }}</p> 
     </mat-card-content>
     <mat-card-actions>
-      <button mat-mini-fab [routerLink]="['/reviews/edit', review.id]"><i class="fas fa-edit"></i></button>
-      <button mat-mini-fab (click)="deleteReview(review.id)"><i class="far fa-trash-alt"></i></button>
+      <mat-chip-list>
+        <div *ngIf="review.movieGenre">
+          <mat-chip  selected="true" color="primary" style="font-size: smaller;" 
+            *ngFor="let genre of review.movieGenre.split(',')">
+            {{ genre }}
+          </mat-chip>
+        </div>
+      </mat-chip-list>
+      <!-- <button mat-mini-fab [routerLink]="['/reviews/edit', review.id]"><i class="fas fa-edit"></i></button>
+      <button mat-mini-fab (click)="deleteReview(review.id)"><i class="far fa-trash-alt"></i></button> -->
     </mat-card-actions>
   </mat-card>
 </div>

@@ -20,17 +20,24 @@
         <button fxFlex mat-icon-button class="search-button" color="accent" type="submit">
           <i class="fas fa-search"></i> Search
         </button>
+        <p *ngIf="!userData" style="font-size: smaller; color: darkgray;">*Please log in to enter a review</p>
       </form>
     </div>
 
-    <div fxFlex style="width: 75%; margin-top: 60px;">
+    <div *ngIf="userData" fxFlex style="width: 75%; margin-top: 60px;">
       <form [formGroup]="reviewForm" fxLayout="column" fxLayoutAlign="space-between center"
        (ngSubmit)="edit ? updateReview() : saveNewReview()">
+        <mat-label>Your rating</mat-label>
+        <mat-slider formControlName="userRating" thumbLabel min="1" max="10" step="0.1" tickInterval="1"
+          style="width: 80%;">
+        </mat-slider>
         <mat-form-field fxFlex appearance="standard" style="width: 80%;">
           <mat-label>Description</mat-label>
-          <textarea matInput rows="15" formControlName="description" required></textarea>
+          <textarea matInput rows="15" formControlName="review" required></textarea>
         </mat-form-field>
-        <button mat-raised-button type="submit" [disabled]="!reviewForm.valid">Send!</button>
+        <button mat-raised-button type="submit" [disabled]="!reviewForm.valid || errMsg.err">
+          Send!
+        </button>
       </form>
     </div>
   </div>
@@ -50,13 +57,15 @@
       </mat-card-title-group>
       <img mat-card-image [src]="(!review.moviePoster || review.moviePoster=='N/A')? 
       '/assets/no-image.png' : review.moviePoster">
-      <mat-card-content *ngIf="review">
+      <mat-card-content>
         <p>{{ review.moviePlot }}</p>
-        <!-- <p>{{ reviewForm.value.created_at | date: 'yyyy-MMM-dd' }}</p> -->
-        <mat-chip-list>
-          <mat-chip selected="true" color="accent" style="font-size: small;" *ngFor="let genre of review.movieGenre">
-            {{ genre }}
-          </mat-chip>
+      <mat-chip-list>
+          <div *ngIf="review.movieGenre">
+            <mat-chip  selected="true" color="accent" style="font-size: small;" 
+              *ngFor="let genre of review.movieGenre.split(',')">
+              {{ genre }}
+            </mat-chip>
+          </div>
         </mat-chip-list>
       </mat-card-content>
     </mat-card>

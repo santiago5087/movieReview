@@ -1,3 +1,18 @@
+$accent-color: #ff4081;
+
 .review-card {
   max-width: 300px !important;
+  margin: 30px;
+}
+
+.poster-img {
+  height: 220px;
+  width: auto;
+  margin: 0 !important;
+  margin-right: 15px !important;
+}
+
+.user-card {
+  color: $accent-color;
+  font-size: larger;
 }

@@ -1,7 +1,9 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
+import { AuthService } from 'src/app/services/auth.service';
 import { ReviewsService } from '../../services/reviews.service';
 import { MovieService } from '../../services/movie.service';
 import { Review } from '../../models/Review';
@@ -11,15 +13,18 @@ import { Review } from '../../models/Review';
   templateUrl: './review-form.component.html',
   styleUrls: ['./review-form.component.scss']
 })
-export class ReviewFormComponent implements OnInit {
+export class ReviewFormComponent implements OnInit, OnDestroy {
 
+  userData: any = undefined;
+  subscription: Subscription;
   reviewForm: FormGroup;
   searchMovieForm: FormGroup;
   review: Review = new Review();
-  errMsg = { err: false, msg: "" };
+  errMsg = { err: true, msg: "" };
   edit = false;
 
   constructor(private reviewsService: ReviewsService,
+    private authService: AuthService,
     private movieService: MovieService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -28,6 +33,9 @@ export class ReviewFormComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.authService.loadUserCredentials();
+    this.subscription = this.authService.getUserData().subscribe(usr => this.userData = usr);
+
     const params = this.activatedRoute.snapshot.params;
     if (params.id) {
       this.reviewsService.getReview(params.id)
@@ -50,16 +58,17 @@ export class ReviewFormComponent implements OnInit {
           },
           err => console.error(err)
         );
-    } 
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   createForm() {
     this.reviewForm = this.fb.group({
-      id: [0],
-      title: [''],
-      description: [''],
-      image: [''],
-      created_at: [new Date()]
+      review: ['', Validators.required],
+      userRating: [1]
     });
 
     this.searchMovieForm = this.fb.group({
@@ -80,10 +89,11 @@ export class ReviewFormComponent implements OnInit {
           this.review.movieTitle = res.Title;
           this.review.type = res.Type;
           this.review.movieYear = res.Year;
-          this.review.movieGenre = res.Genre.split(",");
+          this.review.movieGenre = res.Genre;
           this.review.moviePlot = res.Plot;
           this.review.moviePoster = res.Poster;
           this.review.movieRating = res.Ratings[0].Value;
+          
         } else {
           this.errMsg.err = true;
           this.errMsg.msg = res.Error;
@@ -93,29 +103,29 @@ export class ReviewFormComponent implements OnInit {
   }
 
   saveNewReview() {
-    let review: Review = this.reviewForm.value;
-    delete review.id;
-    delete review.created_at;
-    
-    this.reviewsService.saveReview(review)
+    this.review.username = this.userData.username;
+    this.review.review = this.reviewForm.value.review;
+    this.review.userRating = this.reviewForm.value.userRating;
+    console.log(this.review);
+     
+    this.reviewsService.saveReview(this.review)
       .subscribe(
         res => {
           console.log(res);
-          this.reviewForm.reset()
+          // this.reviewForm.reset()
           this.router.navigate(['/reviews']);
         },
         err => console.error(err));
-
   }
 
   updateReview() {
     let review: Review = this.reviewForm.value;
-    delete review.created_at;
+    // delete review.created_at;
     this.reviewsService.updateReview(review.id, review)
       .subscribe(
         res => {
           console.log(res);
-          this.reviewForm.reset()
+          // this.reviewForm.reset()
           this.router.navigate(['/reviews']);
         },
         err => console.error(err)

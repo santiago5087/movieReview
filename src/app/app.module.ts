@@ -24,11 +24,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MdePopoverModule } from '@material-extended/mde';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { ReviewsService } from './services/reviews.service';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { MyReviewsComponent } from './components/my-reviews/my-reviews.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { SignupComponent } from './components/signup/signup.component';
     ReviewListComponent,
     FooterComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    MyReviewsComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { SignupComponent } from './components/signup/signup.component';
     MdePopoverModule,
     MatListModule,
     MatSnackBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSliderModule
   ],
   providers: [
     ReviewsService,
