@@ -23,6 +23,10 @@ export class ReviewsService {
     return this.http.get<responseReview>(`${this.API_URI}/reviews`);
   }
 
+  getUserReviews() {
+    return this.http.get<responseReview>(`${this.API_URI}/reviews/my-reviews`);
+  }
+
   getReview(id: string): Observable<responseReview> {
     return this.http.get<responseReview>(`${this.API_URI}/reviews/${id}`);
   }
@@ -31,7 +35,7 @@ export class ReviewsService {
     return this.http.post(`${this.API_URI}/reviews`, review);
   }
 
-  deleteReview(id: string) {
+  deleteReview(id: string): Observable<any> {
     return this.http.delete(`${this.API_URI}/reviews/${id}`);
   }
 

@@ -40,15 +40,4 @@ export class ReviewListComponent implements OnInit {
     );
   }
 
-  deleteReview(id: string) {
-    this.reviewsService.deleteReview(id)
-      .subscribe(
-        res => {
-          console.log(res);
-          this.getReviews();
-        },
-        err => console.log(err)
-      );
-  }
-
 }
