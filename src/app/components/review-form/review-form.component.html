@@ -2,7 +2,7 @@
   <div fxFlex="45" fxLayout="column" fxLayoutAlign="space-between center">
 
     <div fxFlex style="width: 70%;">
-      <form *ngIf="!edit" [formGroup]="searchMovieForm" (ngSubmit)="searchMovie()"
+      <form [formGroup]="searchMovieForm" (ngSubmit)="searchMovie()"
         fxLayout="column" fxLayoutAlign="space-around start">
         <h4 matLine>Search Movie</h4>
         <div fxFlex>
@@ -36,7 +36,7 @@
           <textarea matInput rows="15" formControlName="review" required></textarea>
         </mat-form-field>
         <button mat-raised-button type="submit" [disabled]="!reviewForm.valid || errMsg.err">
-          Send!
+          {{ edit ? 'Update!' : 'Send!' }}
         </button>
       </form>
     </div>

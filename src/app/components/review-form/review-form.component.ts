@@ -42,15 +42,20 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
         .subscribe(
           res => {
             if (res.success) {
-              let review: Review = res.result;
+              this.review = res.result[0];
+
               this.reviewForm = this.fb.group({
-                id: [review.id],
-                title: [review.movieTitle],
-                description: [review.moviePlot],
-                image: [review.moviePoster],
-                created_at: [review.created_at]
+                review: [this.review.review],
+                userRating: [this.review.userRating]
               });
-              console.log(res);
+
+              this.searchMovieForm = this.fb.group({
+                movieTitle: [this.review.movieTitle, Validators.required],
+                movieYear: [this.review.movieYear]
+              });
+
+              this.searchMovie();
+
               this.edit = true;
             } else {
               throw new Error(res.err.sqlMessage);
@@ -81,7 +86,6 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
     let movie: any = this.searchMovieForm.value;
     this.movieService.getMovie(movie.movieTitle, movie.movieYear)
       .subscribe(res => {
-        console.log(res);
 
         if (res.Response === "True") {
           this.errMsg.err = false
@@ -106,26 +110,25 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
     this.review.username = this.userData.username;
     this.review.review = this.reviewForm.value.review;
     this.review.userRating = this.reviewForm.value.userRating;
-    console.log(this.review);
      
     this.reviewsService.saveReview(this.review)
       .subscribe(
         res => {
-          console.log(res);
-          // this.reviewForm.reset()
           this.router.navigate(['/reviews']);
         },
         err => console.error(err));
   }
 
   updateReview() {
-    let review: Review = this.reviewForm.value;
-    // delete review.created_at;
-    this.reviewsService.updateReview(review.id, review)
+    delete this.review.created_at;
+    delete this.review.updated_at;
+    this.review.review = this.reviewForm.value.review;
+    this.review.userRating = this.reviewForm.value.userRating;
+
+    this.reviewsService.updateReview(this.review.id, this.review)
       .subscribe(
         res => {
           console.log(res);
-          // this.reviewForm.reset()
           this.router.navigate(['/reviews']);
         },
         err => console.error(err)
