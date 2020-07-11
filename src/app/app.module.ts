@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { ReviewFormComponent } from './components/review-form/review-form.component'
 import { ReviewListComponent } from './components/review-list/review-list.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -41,7 +42,8 @@ import { MyReviewsComponent } from './components/my-reviews/my-reviews.component
     FooterComponent,
     LoginComponent,
     SignupComponent,
-    MyReviewsComponent
+    MyReviewsComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

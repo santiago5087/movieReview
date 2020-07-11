@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.auth.loadUserCredentials();
     this.subscription = this.auth.getUserData().subscribe(usr => this.userData = usr);
     /* Se suscribe pero aún no se le ha emitido ningún valor de "userData", el cual se emite cuando se termina 
-    de realizar la petición GET a users/checkToken 
+    de realizar la petición GET a users/checkToken -> asynchronous
     */
   }
 

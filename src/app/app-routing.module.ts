@@ -4,6 +4,7 @@ import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { ReviewListComponent } from './components/review-list/review-list.component';
 import { ReviewFormComponent } from './components/review-form/review-form.component';
 import { MyReviewsComponent } from './components/my-reviews/my-reviews.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: "enabled",
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'reviews', component: ReviewListComponent },
   { path: 'reviews/add', component: ReviewFormComponent },
   { path: 'reviews/my-reviews', component: MyReviewsComponent },
-  { path: 'reviews/edit/:id', component: ReviewFormComponent }
+  { path: 'reviews/edit/:id', component: ReviewFormComponent },
+  { path: 'edit-profile', component: EditProfileComponent }
 ];
 
 @NgModule({

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ReviewsService } from '../../services/reviews.service';
 import { MovieService } from '../../services/movie.service';
 import { Review } from '../../models/Review';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-review-form',
@@ -15,7 +16,7 @@ import { Review } from '../../models/Review';
 })
 export class ReviewFormComponent implements OnInit, OnDestroy {
 
-  userData: any = undefined;
+  userData: User = undefined;
   subscription: Subscription;
   reviewForm: FormGroup;
   searchMovieForm: FormGroup;
@@ -86,6 +87,7 @@ export class ReviewFormComponent implements OnInit, OnDestroy {
     let movie: any = this.searchMovieForm.value;
     this.movieService.getMovie(movie.movieTitle, movie.movieYear)
       .subscribe(res => {
+        console.log(res);
 
         if (res.Response === "True") {
           this.errMsg.err = false

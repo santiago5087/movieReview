@@ -3,18 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
+import { User } from '../models/user';
+
 interface AuthResponse {
   status: string;
   success: string;
   error?: any;
   token?: string;
-  user?: any;
-}
-
-interface UserData {
-  username: string;
-  email: string;
-  profilePicture: string;
+  user?: User;
 }
 
 @Injectable({
@@ -25,7 +21,7 @@ export class AuthService {
   tokenKey = 'JWT';
   userKey = 'USK';
   isAuthenticated = false;
-  userData: Subject<UserData> = new Subject<UserData>();
+  userData: Subject<User> = new Subject<User>();
   authToken: string = undefined;
   baseURL = 'http://localhost:3000/api/';
 
@@ -36,10 +32,11 @@ export class AuthService {
       .subscribe(res => {
         console.log("JWT valid!", res);
 
-        let user: UserData = { 
+        let user: User = {
           username: res.user.username,
           profilePicture: res.user.profilePicture,
-          email: res.user.email
+          email: res.user.email,
+          password: res.user.password
         }
 
         this.sendUserData(user);
@@ -50,7 +47,7 @@ export class AuthService {
       });
   }
 
-  sendUserData(user: UserData): void {
+  sendUserData(user: User): void {
     this.userData.next(user);
   }
 
@@ -66,20 +63,20 @@ export class AuthService {
     localStorage.removeItem(this.tokenKey);
   }
 
-  useCredentials(userData: UserData, token: string): void {
+  useCredentials(userData: User, token: string): void {
     this.isAuthenticated = true;
     this.sendUserData(userData);
     this.authToken = token;
   }
 
-  storeUserCredentials(userData: UserData, token: string): void {
+  storeUserCredentials(userData: User, token: string): void {
     localStorage.setItem(this.userKey, JSON.stringify(userData));
     localStorage.setItem(this.tokenKey, token);
     this.useCredentials(userData, token);
   }
 
   loadUserCredentials(): void  {
-    const userData: UserData = JSON.parse(localStorage.getItem(this.userKey));
+    const userData: User = JSON.parse(localStorage.getItem(this.userKey));
     const token: string = localStorage.getItem(this.tokenKey);
     console.log('loadUserData', userData);
     if (userData && userData.username) {
@@ -96,7 +93,8 @@ export class AuthService {
         this.storeUserCredentials({ 
           "username": res.user.username, 
           "profilePicture": res.user.profilePicture,
-          "email": res.user.email }, res.token);
+          "email": res.user.email,
+          "password": res.user.password }, res.token);
 
         return { 'success': true }
       }),
