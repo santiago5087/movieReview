@@ -40,7 +40,6 @@ export class ReviewsService {
   }
 
   updateReview(id: number, updatedReview: Review): Observable<responseReview> {
-    console.log(id);
     return this.http.put<responseReview>(`${this.API_URI}/reviews/${id}`, updatedReview);
   }
 

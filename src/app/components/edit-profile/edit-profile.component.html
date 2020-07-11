@@ -1,1 +1,56 @@
-<p>edit-profile works!</p>
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+
+  <div fxFlex="35">
+    <mat-card class="profile-card">
+      <mat-card-title>Profile Picture</mat-card-title>
+      <img mat-card-avatar style="height: 280px; width: 280px;" 
+        [src]="profileForm.value.profilePicture == '' ? '/assets/no-image-avatar.png' : profileForm.value.profilePicture">
+    </mat-card>
+  </div>
+
+  <div fxFlex="55" style="width: 100%;">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxFlex class="form-box">
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" fxLayout="column" 
+          fxLayoutAlign="space-between center">
+          <mat-form-field fxFlex appearance="fill" class="form-field">
+            <mat-label>User name</mat-label>
+            <input matInput formControlName="username" type="text" required>
+          </mat-form-field>
+          <mat-form-field fxFlex appearance="fill" class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required email>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label fxFlex>Profile picture</mat-label>
+            <input matInput type="url" formControlName="profilePicture">
+          </mat-form-field>
+          <button fxFlex mat-raised-button color="accent" style="width: 80%;" type="submit">
+            Update
+          </button>
+        </form>
+      </div>
+  
+      <div fxFlex class="form-box">
+        <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" fxLayout="column" 
+            fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex appearance="fill" class="form-field">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" type="password" required>
+            </mat-form-field>
+            <mat-form-field fxFlex appearance="fill" class="form-field">
+              <mat-label>New password</mat-label>
+              <input matInput formControlName="newPassword" type="password" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label fxFlex>Type again the new password</mat-label>
+              <input matInput formControlName="passwordVer" type="password" required>
+            </mat-form-field>
+            <button fxFlex mat-raised-button color="accent" style="width: 80%;" type="submit">
+              Change password
+            </button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
