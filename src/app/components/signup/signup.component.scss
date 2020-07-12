@@ -1,3 +1,4 @@
+$background-color: #424242;
 $bg-light: #494949;
 
 .profile-card {
@@ -23,4 +24,18 @@ $bg-light: #494949;
   font-size: smaller;
   margin-top: 10px;
   cursor: pointer;
+}
+
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    box-shadow: $background-color;
+    -webkit-box-shadow: 0 0 0 30px $background-color inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
 }

@@ -61,11 +61,13 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   fillForm(): void {
-    this.profileForm.patchValue({
-      username: this.userData.username,
-      email: this.userData.email,
-      profilePicture: this.userData.profilePicture
-    });
+    if (this.userData) {
+      this.profileForm.patchValue({
+        username: this.userData.username,
+        email: this.userData.email,
+        profilePicture: this.userData.profilePicture
+      });
+    }
   }
 
   saveProfile(): void {

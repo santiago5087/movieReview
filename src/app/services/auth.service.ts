@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Subject, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -25,7 +26,8 @@ export class AuthService {
   authToken: string = undefined;
   baseURL = 'http://localhost:3000/api/';
 
-  constructor(public http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private router: Router) { }
 
   checkJWT(): void {
     this.http.get<AuthResponse>(this.baseURL + 'users/checkToken')
@@ -109,6 +111,7 @@ export class AuthService {
   }
 
   logOut(): void {
+    this.router.navigate(['reviews']);
     this.destroyUserCredentials();
   }
 

@@ -1,3 +1,5 @@
+$background-color: #424242;
+
 .form-box {
   margin: 15px;
   font-size: small;
@@ -13,4 +15,18 @@
   mat-card-title {
     margin-bottom: 20px;
   }
+}
+
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    box-shadow: $background-color;
+    -webkit-box-shadow: 0 0 0 30px $background-color inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
 }
