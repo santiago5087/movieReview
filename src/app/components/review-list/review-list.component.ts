@@ -19,11 +19,30 @@ import { ReviewsService } from '../../services/reviews.service';
 export class ReviewListComponent implements OnInit {
 
   reviews: Review[] = [];
+  pageIndex: number = 0;
+  pageSize: number = 6;
+  lowValue: number = 0;
+  highValue: number = 6;
 
   constructor(private reviewsService: ReviewsService) { }
 
   ngOnInit(): void {
     this.getReviews();
+  }
+
+  getPaginatorData(event) {
+    console.log(event)
+    if (event.pageIndex == this.pageIndex + 1) {
+      this.lowValue += this.pageSize;
+      this.highValue += this.pageSize;
+    }
+
+    else if (event.pageIndex == this.pageIndex - 1) {
+      this.lowValue -= this.pageSize;
+      this.highValue -= this.pageSize;
+    }
+
+    this.pageIndex = event.pageIndex;
   }
 
   getReviews() {

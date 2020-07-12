@@ -26,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MdePopoverModule } from '@material-extended/mde';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { ReviewsService } from './services/reviews.service';
 import { FooterComponent } from './components/footer/footer.component';
@@ -64,7 +65,8 @@ import { MyReviewsComponent } from './components/my-reviews/my-reviews.component
     MatListModule,
     MatSnackBarModule,
     MatChipsModule,
-    MatSliderModule
+    MatSliderModule,
+    MatPaginatorModule
   ],
   providers: [
     ReviewsService,
