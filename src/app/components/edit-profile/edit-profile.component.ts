@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
@@ -9,7 +10,7 @@ import { User } from '../../models/user';
 
 const comparePwdsValidator: ValidatorFn = (control: FormGroup):
   ValidationErrors | null => {
-    const password = control.get('password');
+    const password = control.get('newPassword');
     const passwordVerify = control.get('passwordVer');
 
     return password && passwordVerify && password.value !== passwordVerify.value ? {'comparePwds': true}: null; 
@@ -30,6 +31,7 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService,
     private usersService: UsersService,
     private router: Router,
+    private snackBar: MatSnackBar,
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -47,7 +49,6 @@ export class EditProfileComponent implements OnInit, OnDestroy {
 
   createForm(): void {
     this.profileForm = this.fb.group({
-      username: ['', Validators.required],
       email: ['', Validators.required],
       profilePicture: ['', Validators.required]
     });
@@ -70,18 +71,33 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   saveProfile(): void {
     this.usersService.updateProfile(this.profileForm.value)
       .subscribe(res => {
-        this.authService.checkJWT(); //Para que se acutialice la foto de perfil del header
+        this.authService.checkJWT(); 
+        /* Para que se acutialice la foto de perfil del header
+        */
+       
+        this.snackBar.open(res.result, "Ok!", { duration: 6000 });
         this.router.navigate(['/reviews']);
-      }, err => console.log(err));
+      }, err => {
+        let errMsg: string = err.error.err.sqlMessage; 
+        if (errMsg.includes("Duplicate entry") && errMsg.includes("email")) {
+          this.snackBar.open("The email entered already exists!, please enter in another",
+           "Ok!", { duration: 6000 });
+        } else {
+          this.snackBar.open("An error has occurred, please try again", "Ok!", { duration: 6000 });
+          console.log(err);
+        }
+      });
   }
 
   savePassword(): void {
     this.usersService.changePassword(this.passwordForm.value)
       .subscribe(res => {
-        console.log(res);
         this.authService.checkJWT();
+        this.snackBar.open(res.result, "Ok!", { duration: 6000 });
         this.router.navigate(['/reviews']);
-      }, err => console.log(err));
+      }, err => {
+        this.snackBar.open(err.error.err  , "Ok!", { duration: 6000 });
+      });
   }
 
 }

@@ -11,28 +11,7 @@
   <div fxFlex="55" style="width: 100%;">
     <div fxLayout="row" fxLayoutAlign="space-between center">
       <div fxFlex class="form-box">
-        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" fxLayout="column" 
-          fxLayoutAlign="space-between center">
-          <mat-form-field fxFlex appearance="fill" class="form-field">
-            <mat-label>User name</mat-label>
-            <input matInput formControlName="username" type="text" required>
-          </mat-form-field>
-          <mat-form-field fxFlex appearance="fill" class="form-field">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" type="email" required email>
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label fxFlex>Profile picture</mat-label>
-            <input matInput type="url" formControlName="profilePicture">
-          </mat-form-field>
-          <button fxFlex mat-raised-button color="accent" style="width: 80%;" type="submit">
-            Update
-          </button>
-        </form>
-      </div>
-  
-      <div fxFlex class="form-box">
-        <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" fxLayout="column" 
+        <form  #pswForm="ngForm" [formGroup]="passwordForm" (ngSubmit)="savePassword()" fxLayout="column" 
             fxLayoutAlign="space-between center">
             <mat-form-field fxFlex appearance="fill" class="form-field">
               <mat-label>Password</mat-label>
@@ -46,10 +25,32 @@
               <mat-label fxFlex>Type again the new password</mat-label>
               <input matInput formControlName="passwordVer" type="password" required>
             </mat-form-field>
-            <button fxFlex mat-raised-button color="accent" style="width: 80%;" type="submit">
+            <mat-error *ngIf="passwordForm.errors?.comparePwds && (passwordForm.touched || passwordForm.dirty)"
+              style="font-size: smaller; margin-bottom: 15px;">Passwords must match.
+            </mat-error>
+            <button fxFlex mat-raised-button color="accent" style="width: 80%;" type="submit"
+            [disabled]="!pswForm.valid">
               Change password
             </button>
           </form>
+      </div>
+
+      <div fxFlex class="form-box">
+        <form  #prForm="ngForm" [formGroup]="profileForm" (ngSubmit)="saveProfile()" fxLayout="column" 
+          fxLayoutAlign="space-between center">
+          <mat-form-field fxFlex appearance="fill" class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required email>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label fxFlex>Profile picture</mat-label>
+            <input matInput type="url" formControlName="profilePicture">
+          </mat-form-field>
+          <button fxFlex mat-raised-button color="accent" style="width: 80%;" type="submit"
+            [disabled]="!prForm.valid">
+            Update
+          </button>
+        </form>
       </div>
     </div>
   </div>
