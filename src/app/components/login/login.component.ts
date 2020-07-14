@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
@@ -13,6 +13,8 @@ import { SignupComponent } from '../signup/signup.component';
 })
 export class LoginComponent implements OnInit {
 
+  snackBarConfig = new MatSnackBarConfig()
+
   constructor(private dialogRef: MatDialogRef<LoginComponent>,
     private auth: AuthService,
     private snackBar: MatSnackBar,
@@ -24,6 +26,8 @@ export class LoginComponent implements OnInit {
   user = { username: "", password: "" };
 
   ngOnInit(): void {
+    this.snackBarConfig.panelClass = ['dark-snack-bar'];
+    this.snackBarConfig.duration = 6000;
   }
 
   onSubmit() {
@@ -36,7 +40,7 @@ export class LoginComponent implements OnInit {
         }
       },
       err => {
-        this.snackBar.open(err.err.message, "Ok!", { duration: 6000 });
+        this.snackBar.open(err.err.message, "Ok!", this.snackBarConfig);
         console.log(err);
       });
   }

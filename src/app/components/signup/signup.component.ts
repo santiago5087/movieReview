@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, ValidatorFn, Form } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service'
@@ -23,6 +23,7 @@ export class SignupComponent implements OnInit {
 
   signupForm: FormGroup;
   @ViewChild('form') signupFormDirective;
+  snackBarConfig = new MatSnackBarConfig()
 
   constructor(private dialogRef: MatDialogRef<SignupComponent>,
     private authService: AuthService,
@@ -35,6 +36,8 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.snackBarConfig.panelClass = ['dark-snack-bar'];
+    this.snackBarConfig.duration = 6000;
   }
 
   createForm(): void {
@@ -50,7 +53,6 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     this.authService.signUp(this.signupForm.value)
       .subscribe(signup => {
-        console.log('Successful registration');
         this.signupForm.reset({
           username: '',
           email: '',
@@ -60,8 +62,8 @@ export class SignupComponent implements OnInit {
         });
 
         this.signupFormDirective.resetForm();
-        console.log(signup);
-        // this.snackBar.open(signup.status , "Ok!", { duration: 10000 });
+        this.snackBarConfig.duration = 10000;
+        this.snackBar.open(signup.state , "Ok!", this.snackBarConfig);
         this.dialogRef.close();
       },
       err => {
@@ -79,7 +81,7 @@ export class SignupComponent implements OnInit {
           snackBarMsg = errorMessage;
         }
 
-        this.snackBar.open(snackBarMsg, "Ok!", { duration: 6000 });
+        this.snackBar.open(snackBarMsg, "Ok!", this.snackBarConfig);
         console.log(err);
       });
   }
