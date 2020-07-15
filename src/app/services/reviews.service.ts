@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Review } from '../models/Review';
+import { environment } from '../../environments/environment';
 
 interface responseReview {
   err?: any
@@ -15,7 +16,7 @@ interface responseReview {
 })
 export class ReviewsService {
 
-  API_URI = 'http://localhost:3000/api';
+  API_URI = environment.apiURL;
 
   constructor(private http: HttpClient) { }
 

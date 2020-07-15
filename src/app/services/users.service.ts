@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 interface responseUser {
   err?: any
   success: boolean;
@@ -13,7 +15,7 @@ interface responseUser {
 })
 export class UsersService {
 
-  API_URI = 'http://localhost:3000/api';
+  API_URI = environment.apiURL;
 
   constructor(private http: HttpClient) { }
 

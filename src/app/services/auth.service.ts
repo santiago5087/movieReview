@@ -5,6 +5,7 @@ import { Subject, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { User } from '../models/user';
+import { environment } from '../../environments/environment';
 
 interface AuthResponse {
   status: string;
@@ -24,7 +25,7 @@ export class AuthService {
   isAuthenticated = false;
   userData: Subject<User> = new Subject<User>();
   authToken: string = undefined;
-  baseURL = 'http://localhost:3000/api/';
+  baseURL = environment.apiURL;
 
   constructor(private http: HttpClient,
     private router: Router) { }

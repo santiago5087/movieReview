@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
 
-  baseURL = 'http://localhost:3000/api/';
+  baseURL = environment.apiURL;
 
   sendRequest = false;
   /* Este atributo se utilizaba cuando se realizaban las peticiones GET desde el cliente (Angular) a la api OMDB,
