@@ -21,11 +21,11 @@ export class UsersService {
 
 
   changePassword(pwds: any): Observable<any> {
-    return this.http.put<responseUser>(`${this.API_URI}/users/changePass`, pwds);
+    return this.http.put<responseUser>(`${this.API_URI}users/changePass`, pwds);
   }
 
   updateProfile(profile: any): Observable<any> {
-    return this.http.put<responseUser>(`${this.API_URI}/users/updateProfile`, profile);
+    return this.http.put<responseUser>(`${this.API_URI}users/updateProfile`, profile);
   }
 
 }
