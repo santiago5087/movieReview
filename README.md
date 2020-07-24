@@ -4,6 +4,10 @@
 #### Or its API at : https://moovie-review.herokuapp.com/api/
 
 Web personal project, using Angular, NodeJS with TypeScript, Express and Mysql.
+This app consumes the next APIs:
+- OMDB API: http://www.omdbapi.com (to extract information about movies and series)
+- movieReview-api: https://github.com/santiago5087/movieReview-api (NodeJS app)
+
 - Application deploy at:  https://www.heroku.com
 - MySQL DB deploy at: https://www.clever-cloud.com/en/
 
