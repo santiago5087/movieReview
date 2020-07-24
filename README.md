@@ -8,8 +8,8 @@ This app consumes the next APIs:
 - OMDB API: http://www.omdbapi.com (to extract information about movies and series)
 - movieReview-api: https://github.com/santiago5087/movieReview-api (NodeJS app)
 
-- Application deploy at:  https://www.heroku.com
-- MySQL DB deploy at: https://www.clever-cloud.com/en/
+#### Application deploy at:  https://www.heroku.com
+#### MySQL DB deploy at: https://www.clever-cloud.com/en/
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
